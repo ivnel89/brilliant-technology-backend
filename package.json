@@ -20,7 +20,9 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "docker:build": "docker build -t comment-and-replies-backend .",
-    "docker:start": "docker run -dp 3000:3000 comment-and-replies-backend"
+    "docker:start": "docker run -dp 3000:3000 comment-and-replies-backend",
+    "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
+    "migration:gen": "npm run typeorm migration:generate -- -d src/migrations -n"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",

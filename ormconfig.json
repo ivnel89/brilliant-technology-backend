@@ -6,5 +6,9 @@
     "password": "root123",
     "database": "postgres",
     "entities": ["dist/**/*.entity{.ts,.js}"],
-    "synchronize": false
+    "synchronize": false,
+    "migrationsRun": true,
+    "migrationsTableName": "migrations",
+    "migrations": ["dist/migrations/*{.ts,.js}"],
+    "logging": ["query", "error"]
   }
