@@ -1,9 +1,21 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, UpdateDateColumn, CreateDateColumn, DeleteDateColumn } from 'typeorm';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  constructor(
+    firstName?: string,
+    lastName?: string,
+    displayPicture?: string,
+    isActive = true,
+  ) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.displayPicture = displayPicture;
+    this.isActive = isActive;
+  }
+
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
   @Column()
   firstName: string;
@@ -16,4 +28,13 @@ export class User {
 
   @Column()
   displayPicture: string;
+
+  @UpdateDateColumn()
+  lastModifiedDate: Date;
+
+  @CreateDateColumn()
+  createdDate: Date;
+
+  @DeleteDateColumn()
+  deletedDate: Date;
 }
