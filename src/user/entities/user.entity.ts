@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, UpdateDateColumn, CreateDateColumn, DeleteDateColumn } from 'typeorm';
+import { Comment } from 'src/comment/entities/comment.entity';
+import { Entity, Column, PrimaryGeneratedColumn, UpdateDateColumn, CreateDateColumn, DeleteDateColumn, OneToMany } from 'typeorm';
 
 @Entity()
 export class User {
@@ -37,4 +38,7 @@ export class User {
 
   @DeleteDateColumn()
   deletedDate: Date;
+
+  @OneToMany(() => Comment, comment => comment.author)
+  comments: Array<Comment>
 }
