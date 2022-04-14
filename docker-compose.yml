@@ -1,0 +1,14 @@
+version: "1"
+services:
+  db:
+    image: "postgres:13"
+    container_name: "comment_and_replies_postgres"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "root123"
+    ports:
+      - "5438:5432"
+    volumes:
+      - comment_and_replies_dbdata:/var/lib/postgresql/data
+volumes:
+  comment_and_replies_dbdata:
