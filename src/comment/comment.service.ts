@@ -34,10 +34,9 @@ export class CommentService {
       this.userService.findOne(upVoteCommentDto?.userId),
       this.findOne(commentId),
     ]);
-    comment.upVoters = [
-      ...comment.upVoters,
-      user
-    ];
+    if (!comment.upVoters.find((user) => user.id === upVoteCommentDto.userId)) {
+      comment.upVoters = [...comment.upVoters, user];
+    }
 
     return this.commentRepository.save(comment);
   }
