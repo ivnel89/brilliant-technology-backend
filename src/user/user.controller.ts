@@ -3,31 +3,40 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { FindAllUserDto } from './dto/find-all-user.dto';
+import { UserContractMapper } from './mapper/user.mapper';
+import { UserContract } from './contract/user.contract';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
+  private userContractMapper = new UserContractMapper();
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto): Promise<UserContract> {
+    const user = await this.userService
+      .create(createUserDto);
+    return this.userContractMapper.build(user);
   }
 
   @Get()
-  findAll(
-    @Query() findAllUserDto?: FindAllUserDto,
-  ) {
-    return this.userService.findAll(findAllUserDto);
+  async findAll(@Query() findAllUserDto?: FindAllUserDto): Promise<Array<UserContract>> {
+    const users = await this.userService
+      .findAll(findAllUserDto);
+    return this.userContractMapper.buildArray(users);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(id);
+  async findOne(@Param('id') id: string): Promise<UserContract> {
+    const user = await this.userService
+      .findOne(id);
+    return this.userContractMapper.build(user);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(id, updateUserDto);
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<UserContract> {
+    const user = await this.userService
+      .update(id, updateUserDto);
+    return this.userContractMapper.build(user);
   }
 
   @Delete(':id')
