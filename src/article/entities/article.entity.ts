@@ -1,16 +1,14 @@
-import { Article } from 'src/article/entities/article.entity';
-import { User } from 'src/user/entities/user.entity';
-import { Entity, Column, PrimaryGeneratedColumn, UpdateDateColumn, CreateDateColumn, DeleteDateColumn, ManyToOne } from 'typeorm';
+import { Comment } from "src/comment/entities/comment.entity";
+import { User } from "src/user/entities/user.entity";
+import { Entity, Column, PrimaryGeneratedColumn, UpdateDateColumn, CreateDateColumn, DeleteDateColumn, ManyToOne, OneToMany } from 'typeorm';
 
 @Entity()
-export class Comment {
+export class Article {
     constructor(
         author: User,
-        article: Article,
         content: string
         ){  
         this.content = content;
-        this.parentArticle = article;
         this.author = author;
     }
     @PrimaryGeneratedColumn("uuid")
@@ -31,8 +29,6 @@ export class Comment {
     @DeleteDateColumn()
     deletedDate: Date;
 
-    @ManyToOne(() => Article, article => article.comments)
-    parentArticle: Article
-
-    //reported, nsfw
+    @OneToMany(() => Comment, comment => comment.parentArticle, {eager: true})
+    comments: Array<Comment>
 }
