@@ -11,4 +11,9 @@ export class CreateCommentDto {
   @IsString()
   @IsUUID()
   authorId: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsUUID()
+  articleId: string;
 }
