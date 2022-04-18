@@ -1,6 +1,6 @@
 import { Article } from 'src/article/entities/article.entity';
 import { User } from 'src/user/entities/user.entity';
-import { Entity, Column, PrimaryGeneratedColumn, UpdateDateColumn, CreateDateColumn, DeleteDateColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, UpdateDateColumn, CreateDateColumn, DeleteDateColumn, ManyToOne, OneToMany, ManyToMany, JoinTable } from 'typeorm';
 
 @Entity()
 export class Comment {
@@ -34,5 +34,8 @@ export class Comment {
     @ManyToOne(() => Article, article => article.comments)
     parentArticle: Article
 
+    @ManyToMany(() => User, {eager: true})
+    @JoinTable()
+    upVoters: Array<User>
     //reported, nsfw
 }
