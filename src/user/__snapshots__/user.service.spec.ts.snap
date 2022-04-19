@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserService create should call repository's save method with right params 1`] = `
+User {
+  "displayPicture": "www.example.com/image.png",
+  "firstName": "Foo",
+  "isActive": true,
+  "lastName": "Bar",
+}
+`;
+
+exports[`UserService findAll should call repository's find method with right params 1`] = `
+Array [
+  User {
+    "displayPicture": "www.example.com/img.png",
+    "firstName": "Foo",
+    "isActive": true,
+    "lastName": "Bar",
+  },
+]
+`;
+
+exports[`UserService findOne should call repository's findOne method with right params 1`] = `
+User {
+  "displayPicture": "www.example.com/img.png",
+  "firstName": "Foo",
+  "isActive": true,
+  "lastName": "Bar",
+}
+`;
+
+exports[`UserService remove should call repository's softDelete method with right params 1`] = `"Deleted"`;
+
+exports[`UserService update should call repository's save & findOne method with right params 1`] = `
+User {
+  "displayPicture": "www.example.com/img.png",
+  "firstName": "Foo",
+  "isActive": true,
+  "lastName": "Far",
+}
+`;
