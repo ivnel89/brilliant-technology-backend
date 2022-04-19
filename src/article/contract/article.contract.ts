@@ -15,10 +15,12 @@ export class ArticleContract {
         this.content = article.content;
         this.author = userContractMapper.build(article.author);
         this.createdDate = article.createdDate;
-        this.comments = commentContractMapper.buildArray(
-          article.comments,
-          requesterId,
-        );
+        if(article.comments){
+            this.comments = commentContractMapper.buildArray(
+                article.comments,
+                requesterId,
+              );
+        }
     }
     id: string;
     content: string;

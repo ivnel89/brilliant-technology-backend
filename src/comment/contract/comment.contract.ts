@@ -16,7 +16,7 @@ export class CommentContract {
             this.upVotes = comment.upVoters.length;
           }
           if (requesterId) {
-            this.upVoted = comment.upVoters.find(
+            this.upVoted = comment.upVoters?.find(
               (upVoter) => upVoter.id === requesterId,
             )
               ? true
