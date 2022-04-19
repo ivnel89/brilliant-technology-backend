@@ -1,5 +1,6 @@
 import { CreateArticleDto } from "../dto/create-article.dto";
 import { FindAllArticleDto } from "../dto/find-all-article.dto";
+import { FindOneArticleDto } from "../dto/find-one-article.dto";
 
 const createArticleDto = new CreateArticleDto();
 createArticleDto.authorId = "authorId";
@@ -12,8 +13,12 @@ findAllArticleDto.requesterId = "requesterId";
 
 const mockArticleId = "mockArticleId";
 
+const findOneArticleDto = new FindOneArticleDto();
+findAllArticleDto.requesterId = "requesterId";
+
 export{
     createArticleDto,
     findAllArticleDto,
     mockArticleId,
+    findOneArticleDto
 }

@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ArticleController create should call create from articleService with right params 1`] = `
+ArticleContract {
+  "author": UserContract {
+    "displayPicture": "www.example.com/img.png",
+    "firstName": "Foo",
+    "id": undefined,
+    "lastName": "Bar",
+  },
+  "content": "Foo Bar",
+  "createdDate": undefined,
+  "id": undefined,
+}
+`;
+
+exports[`ArticleController findAll should call findAll from articleService with right params 1`] = `
+Array [
+  ArticleContract {
+    "author": UserContract {
+      "displayPicture": "www.example.com/img.png",
+      "firstName": "Foo",
+      "id": undefined,
+      "lastName": "Bar",
+    },
+    "comments": Array [
+      CommentContract {
+        "author": UserContract {
+          "displayPicture": "www.example.com/img.png",
+          "firstName": "Foo",
+          "id": undefined,
+          "lastName": "Bar",
+        },
+        "content": "comment content",
+        "createdDate": undefined,
+        "id": undefined,
+        "upVoted": false,
+      },
+    ],
+    "content": "article content",
+    "createdDate": undefined,
+    "id": undefined,
+  },
+]
+`;
+
+exports[`ArticleController findOne should call findOne from articleService with right params 1`] = `
+ArticleContract {
+  "author": UserContract {
+    "displayPicture": "www.example.com/img.png",
+    "firstName": "Foo",
+    "id": undefined,
+    "lastName": "Bar",
+  },
+  "comments": Array [
+    CommentContract {
+      "author": UserContract {
+        "displayPicture": "www.example.com/img.png",
+        "firstName": "Foo",
+        "id": undefined,
+        "lastName": "Bar",
+      },
+      "content": "comment content",
+      "createdDate": undefined,
+      "id": undefined,
+    },
+  ],
+  "content": "article content",
+  "createdDate": undefined,
+  "id": undefined,
+}
+`;
