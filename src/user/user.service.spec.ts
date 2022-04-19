@@ -5,24 +5,9 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { FindAllUserDto } from './dto/find-all-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
+import { createUserDto, findAllUserDto, mockUserId, updateUserDto } from './test/user.dto.mock';
+import { mockUser, UserRepository } from './test/user.repository.mock';
 import { UserService } from './user.service';
-
-const mockUser = new User(
-  "Foo",
-  "Bar",
-  "www.example.com/img.png"
-)
-
-const UserRepository = {
-  provide: getRepositoryToken(User),
-  useValue: {
-    save: jest.fn().mockImplementation((user: User) => user),
-    findOne: jest.fn().mockResolvedValue(mockUser),
-    create: jest.fn(),
-    softDelete: jest.fn().mockResolvedValue("Deleted"),
-    find: jest.fn().mockResolvedValue([mockUser]),
-  },
-};
 
 describe('UserService', () => {
   let service: UserService;
@@ -51,15 +36,9 @@ describe('UserService', () => {
   });
 
   describe('create', () => {
-    
-    const createUserDto = new CreateUserDto();
-    createUserDto.displayPicture = "www.example.com/image.png";
-    createUserDto.firstName = "Foo";
-    createUserDto.lastName = "Bar";
+    const saveMockError = 'saveMockError';
 
-    const saveMockError = "saveMockError"
-
-    it('should call repository\'s save method with right params', async () => {
+    it("should call repository's save method with right params", async () => {
       await expect(service.create(createUserDto))
         .resolves.toMatchSnapshot()
         .then(() => {
@@ -71,52 +50,41 @@ describe('UserService', () => {
             ),
           );
         });
-    })
+    });
 
     it('should throw an error when save throws an error', async () => {
       repositorySaveSpy.mockRejectedValueOnce(saveMockError);
       await expect(service.create(createUserDto)).rejects.toBe(saveMockError);
-    })
-
-  })
+    });
+  });
 
   describe('findAll', () => {
-    const findAllUserDto = new FindAllUserDto();
-    findAllUserDto.limit = 50;
-    findAllUserDto.offset = 10;
+    const findMockError = 'findMockError';
 
-    const findMockError = "findMockError";
-
-    it('should call repository\'s find method with right params', async () => {
+    it("should call repository's find method with right params", async () => {
       await expect(service.findAll(findAllUserDto))
         .resolves.toMatchSnapshot()
         .then(() => {
-          expect(repositoryFindSpy).toBeCalledWith(
-            {
-              order: {
-                lastModifiedDate: 'ASC',
-              },
-              skip: findAllUserDto.offset,
-              take: findAllUserDto.limit,
+          expect(repositoryFindSpy).toBeCalledWith({
+            order: {
+              lastModifiedDate: 'ASC',
             },
-          );
+            skip: findAllUserDto.offset,
+            take: findAllUserDto.limit,
+          });
         });
-    })
+    });
 
     it('should throw an error when find throws an error', async () => {
       repositoryFindSpy.mockRejectedValueOnce(findMockError);
-      await expect(service.findAll(findAllUserDto))
-        .rejects.toBe(findMockError)
-    })
-
-  })
+      await expect(service.findAll(findAllUserDto)).rejects.toBe(findMockError);
+    });
+  });
 
   describe('findOne', () => {
-    
-    const mockUserId = "mockUserId";
-    const findOneMockError = "findOneMockError";
+    const findOneMockError = 'findOneMockError';
 
-    it('should call repository\'s findOne method with right params', async () => {
+    it("should call repository's findOne method with right params", async () => {
       await expect(service.findOne(mockUserId))
         .resolves.toMatchSnapshot()
         .then(() => {
@@ -126,21 +94,17 @@ describe('UserService', () => {
             },
           });
         });
-    })
+    });
 
     it('should throw an error when findOne throws an error', async () => {
       repositoryFindOneSpy.mockRejectedValueOnce(findOneMockError);
-      await expect(service.findOne(mockUserId))
-        .rejects.toBe(findOneMockError)
-    })
-
-  })
+      await expect(service.findOne(mockUserId)).rejects.toBe(findOneMockError);
+    });
+  });
 
   describe('update', () =>  {
-    const mockUserId = "mockUserId";
-    const updateUserDto = new UpdateUserDto();
-    updateUserDto.lastName = "Far";
-    const saveMockError = "saveMockError"
+
+    const saveMockError = 'saveMockError';
 
     beforeEach(() => {
       repositoryFindOneSpy.mockResolvedValueOnce(mockUser);
@@ -172,7 +136,6 @@ describe('UserService', () => {
   })
 
   describe('remove', () => {
-    const mockUserId = "mockUserId";
     const softDeleteMockError = "softDeleteMockError"
     it('should call repository\'s softDelete method with right params', async () => {      
       await expect(service.remove(mockUserId))

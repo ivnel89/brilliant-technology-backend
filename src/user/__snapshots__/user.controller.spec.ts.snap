@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserController create should call create from userService with right params 1`] = `
+UserContract {
+  "displayPicture": "www.example.com/image.png",
+  "firstName": "Foo",
+  "id": undefined,
+  "lastName": "Bar",
+}
+`;
+
+exports[`UserController findAll should call findAll from userService with right params 1`] = `
+Array [
+  UserContract {
+    "displayPicture": "www.example.com/img.png",
+    "firstName": "Foo",
+    "id": undefined,
+    "lastName": "Bar",
+  },
+]
+`;
+
+exports[`UserController findOne should call findOne from userService with right params 1`] = `
+UserContract {
+  "displayPicture": "www.example.com/img.png",
+  "firstName": "Foo",
+  "id": undefined,
+  "lastName": "Bar",
+}
+`;
+
+exports[`UserController remove should call remove from userService with right params 1`] = `"Deleted"`;
+
+exports[`UserController update should call update from userService with right params 1`] = `
+UserContract {
+  "displayPicture": "www.example.com/img.png",
+  "firstName": "Foo",
+  "id": undefined,
+  "lastName": "Far",
+}
+`;
