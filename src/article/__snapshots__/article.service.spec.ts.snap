@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ArticleService create should call repository's save method with right params 1`] = `
+Article {
+  "author": User {
+    "displayPicture": "www.example.com/img.png",
+    "firstName": "Foo",
+    "isActive": true,
+    "lastName": "Bar",
+  },
+  "content": "Foo Bar",
+}
+`;
+
+exports[`ArticleService findAll should call repository's find method with right params 1`] = `
+Array [
+  Article {
+    "author": User {
+      "displayPicture": "www.example.com/img.png",
+      "firstName": "Foo",
+      "isActive": true,
+      "lastName": "Bar",
+    },
+    "comments": Array [
+      Comment {
+        "author": User {
+          "displayPicture": "www.example.com/img.png",
+          "firstName": "Foo",
+          "isActive": true,
+          "lastName": "Bar",
+        },
+        "content": "comment content",
+        "parentArticle": [Circular],
+      },
+    ],
+    "content": "article content",
+  },
+]
+`;
+
+exports[`ArticleService findOne should call repository's findOne method with right params 1`] = `
+Article {
+  "author": User {
+    "displayPicture": "www.example.com/img.png",
+    "firstName": "Foo",
+    "isActive": true,
+    "lastName": "Bar",
+  },
+  "comments": Array [
+    Comment {
+      "author": User {
+        "displayPicture": "www.example.com/img.png",
+        "firstName": "Foo",
+        "isActive": true,
+        "lastName": "Bar",
+      },
+      "content": "comment content",
+      "parentArticle": [Circular],
+    },
+  ],
+  "content": "article content",
+}
+`;
