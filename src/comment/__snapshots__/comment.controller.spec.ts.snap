@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CommentController create should call create from commentService with right params 1`] = `
+CommentContract {
+  "author": UserContract {
+    "displayPicture": "www.example.com/img.png",
+    "firstName": "Foo",
+    "id": undefined,
+    "lastName": "Bar",
+  },
+  "content": "comment content",
+  "createdDate": undefined,
+  "id": undefined,
+}
+`;
+
+exports[`CommentController removeVote should call removeUpvote from commentService with right params 1`] = `
+CommentContract {
+  "author": UserContract {
+    "displayPicture": "www.example.com/img.png",
+    "firstName": "Foo",
+    "id": undefined,
+    "lastName": "Bar",
+  },
+  "content": "comment content",
+  "createdDate": undefined,
+  "id": undefined,
+  "upVoted": false,
+  "upVotes": 0,
+}
+`;
+
+exports[`CommentController upVote should call upvote from commentService with right params 1`] = `
+CommentContract {
+  "author": UserContract {
+    "displayPicture": "www.example.com/img.png",
+    "firstName": "Foo",
+    "id": undefined,
+    "lastName": "Bar",
+  },
+  "content": "comment content",
+  "createdDate": undefined,
+  "id": undefined,
+  "upVoted": false,
+  "upVotes": 1,
+}
+`;
