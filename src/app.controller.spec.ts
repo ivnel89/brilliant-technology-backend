@@ -14,4 +14,7 @@ describe('AppController', () => {
     appController = app.get<AppController>(AppController);
   });
 
+  it("should exist", () => {
+    expect(appController).toBeDefined()
+  })
 });
