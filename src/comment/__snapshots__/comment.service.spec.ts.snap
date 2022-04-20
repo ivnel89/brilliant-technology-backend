@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CommentService addUpVote add upvoter user to list of upvoters & save 1`] = `
+Comment {
+  "author": User {
+    "displayPicture": "www.example.com/img.png",
+    "firstName": "Foo",
+    "isActive": true,
+    "lastName": "Bar",
+  },
+  "content": "comment content",
+  "parentArticle": Article {
+    "author": User {
+      "displayPicture": "www.example.com/img.png",
+      "firstName": "Foo",
+      "isActive": true,
+      "lastName": "Bar",
+    },
+    "comments": Array [
+      Comment {
+        "author": User {
+          "displayPicture": "www.example.com/img.png",
+          "firstName": "Foo",
+          "isActive": true,
+          "lastName": "Bar",
+        },
+        "content": "comment content",
+        "parentArticle": [Circular],
+      },
+    ],
+    "content": "article content",
+  },
+  "upVoters": Array [
+    User {
+      "displayPicture": "www.example.com/img.png",
+      "firstName": "Foo",
+      "isActive": true,
+      "lastName": "Bar",
+    },
+  ],
+}
+`;
+
+exports[`CommentService create should call repository's save method with right params 1`] = `
+Comment {
+  "author": User {
+    "displayPicture": "www.example.com/img.png",
+    "firstName": "Foo",
+    "isActive": true,
+    "lastName": "Bar",
+  },
+  "content": "comment content",
+  "parentArticle": Article {
+    "author": User {
+      "displayPicture": "www.example.com/img.png",
+      "firstName": "Foo",
+      "isActive": true,
+      "lastName": "Bar",
+    },
+    "comments": Array [
+      Comment {
+        "author": User {
+          "displayPicture": "www.example.com/img.png",
+          "firstName": "Foo",
+          "isActive": true,
+          "lastName": "Bar",
+        },
+        "content": "comment content",
+        "parentArticle": [Circular],
+      },
+    ],
+    "content": "article content",
+  },
+}
+`;
+
+exports[`CommentService removeUpVote removes upvoter user to list of upvoters & save 1`] = `
+Comment {
+  "author": User {
+    "displayPicture": "www.example.com/img.png",
+    "firstName": "Foo",
+    "isActive": true,
+    "lastName": "Bar",
+  },
+  "content": "comment content",
+  "parentArticle": Article {
+    "author": User {
+      "displayPicture": "www.example.com/img.png",
+      "firstName": "Foo",
+      "isActive": true,
+      "lastName": "Bar",
+    },
+    "comments": Array [
+      Comment {
+        "author": User {
+          "displayPicture": "www.example.com/img.png",
+          "firstName": "Foo",
+          "isActive": true,
+          "lastName": "Bar",
+        },
+        "content": "comment content",
+        "parentArticle": [Circular],
+      },
+    ],
+    "content": "article content",
+  },
+  "upVoters": Array [],
+}
+`;
