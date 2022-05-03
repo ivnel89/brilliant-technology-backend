@@ -17,7 +17,7 @@ export class ArticleContract {
         this.createdDate = article.createdDate;
         if(article.comments){
             this.comments = commentContractMapper.buildArray(
-                article.comments,
+                article.comments.reverse(),
                 requesterId,
               );
         }
