@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommentModule } from './comment/comment.module';
 import { ArticleModule } from './article/article.module';
 import { Config } from './config';
+import * as fs from 'fs';
 
 const config = new Config().get();
 
@@ -25,6 +26,9 @@ const config = new Config().get();
       migrationsTableName: 'migrations',
       migrations: ['dist/migrations/*{.ts,.js}'],
       logging: ['query', 'error'],
+      ssl: { ca: fs
+        .readFileSync('./src/config/db-ca-certificate.crt')
+        .toString()}
     }),
     CommentModule,
     ArticleModule,
