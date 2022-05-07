@@ -4,4 +4,4 @@ COPY . .
 RUN yarn
 RUN yarn build
 CMD ["yarn", "start:prod"]
-EXPOSE 8081
+EXPOSE 8080
