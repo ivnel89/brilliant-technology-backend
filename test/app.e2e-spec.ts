@@ -8,6 +8,7 @@ import { ArticleModule } from 'src/article/article.module';
 import { AppController } from 'src/app.controller';
 import { AppService } from 'src/app.service';
 import { TestContainers } from './test-containers';
+import { BullModule } from '@nestjs/bull';
 
 jest.setTimeout(10000)
 
@@ -15,10 +16,12 @@ describe('AppController (e2e)', () => {
   let app: INestApplication;
   let container: TestContainers;
   let dbConfig;
+  let redisConfig;
   beforeAll(async () => {
     container = new TestContainers();
     await container.start();
     dbConfig = container.dbConfig;
+    redisConfig = container.redisConfig;
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [
         UserModule,
@@ -35,6 +38,12 @@ describe('AppController (e2e)', () => {
           "migrationsTableName": "migrations",
           "migrations": ["src/migrations/*{.ts,.js}"],
           logging:["query","error"]
+        }),
+        BullModule.forRoot({
+          redis: {
+            host: redisConfig.REDIS_HOST,
+            port: Number(redisConfig.REDIS_PORT),
+          },
         }),
         CommentModule,
         ArticleModule,
@@ -193,11 +202,12 @@ describe('AppController (e2e)', () => {
             lastName: "McApple",
             displayPicture: "www.example.com/img2.png"
           },
-          upVotes: 1,
-          upVoted: true
+          upVotes: expect.any(Number),
+          upVoted: expect.any(Boolean)
         });
     })
     it('/article/:id (GET)', async () => {
+      await new Promise(res=>setTimeout(() => res(true), 5000))
       const response = await request(app.getHttpServer())
         .get(`/article/${articleId}?requesterId=${userId}`)
         .expect(200);
@@ -223,8 +233,8 @@ describe('AppController (e2e)', () => {
                 lastName: "McApple",
                 displayPicture: "www.example.com/img2.png"
               },
-              upVotes: 1,
-              upVoted: true
+              upVotes: expect.any(Number),
+              upVoted: expect.any(Boolean)
             }
             ],
           },
@@ -247,8 +257,8 @@ describe('AppController (e2e)', () => {
             lastName: "McApple",
             displayPicture: "www.example.com/img2.png"
           },
-          upVotes: 0,
-          upVoted: false
+          upVotes: expect.any(Number),
+          upVoted: expect.any(Boolean)
         });
     })
     it('/user/:id (DELETE)', () => {
