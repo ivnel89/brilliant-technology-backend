@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ArticleService } from 'src/article/article.service';
 import { UserService } from 'src/user/user.service';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpVoteCommentDto } from './dto/up-vote-comment.dto';
 import { Comment } from './entities/comment.entity';
@@ -59,5 +59,14 @@ export class CommentService {
       },
     });;
   }
+
+  getComments(
+    ids: Array<string>){
+      return this.commentRepository.find({
+        where: {
+          id: In(ids)
+        }
+      })
+    }
 
 }

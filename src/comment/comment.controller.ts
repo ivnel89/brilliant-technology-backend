@@ -1,9 +1,10 @@
-import { Controller, Post, Body, Put, Param, } from '@nestjs/common';
+import { Controller, Post, Body, Put, Param, Get, Query, } from '@nestjs/common';
 import { CommentConsumer } from './comment.consumer';
 import { CommentProvider } from './comment.provider';
 import { CommentService } from './comment.service';
 import { CommentContract } from './contract/comment.contract';
 import { CreateCommentDto } from './dto/create-comment.dto';
+import { GetCommentsDto } from './dto/get-comment-meta.dto';
 import { UpVoteCommentDto } from './dto/up-vote-comment.dto';
 import { CommentContractMapper } from './mapper/comment.mapper';
 
@@ -41,5 +42,18 @@ export class CommentController {
    await this.commentProvider.removeUpVoteJob(id, upVoteCommentDto);
     const comment = await this.commentService.findOne(id);
     return this.commentContractMapper.build(comment, upVoteCommentDto.userId);
+  }
+
+  @Get('')
+  async getComments(
+    @Query() getCommentMetaDto: GetCommentsDto,
+  ): Promise<Array<CommentContract>>{
+    const comments = await this.commentService.getComments(
+      getCommentMetaDto.commentIds,
+    );
+    return this.commentContractMapper.buildArray(
+      comments,
+      getCommentMetaDto.userId,
+    );
   }
 }
