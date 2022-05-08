@@ -11,16 +11,28 @@ import { CreateCommentDto } from './dto/create-comment.dto';
 import { validate } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 import { UpVoteCommentDto } from './dto/up-vote-comment.dto';
+import { CommentConsumer } from './comment.consumer';
+import { CommentProvider } from './comment.provider';
+import { BullModule } from '@nestjs/bull';
+import { QueueName } from 'src/config/queueName.enum';
 
 describe('CommentController', () => {
   let controller: CommentController;
   let service: CommentService;
+  let provider: CommentProvider;
   let serviceCreateSpy,
     serviceAddUpVoteSpy,
-    serviceRemoveUpVoteSpy;
+    serviceRemoveUpVoteSpy,
+    providerAddUpVoteJobSpy,
+    providerRemoveUpVoteJobSpy;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports:[
+        BullModule.registerQueue({
+          name: QueueName.COMMENTS_QUEUE
+    })
+      ],
       controllers: [CommentController],
       providers: [
         CommentService,
@@ -29,15 +41,19 @@ describe('CommentController', () => {
         UserRepository,
         ArticleService,
         ArticleRepository,
+        CommentConsumer,
+        CommentProvider
       ],
     }).compile();
 
     controller = module.get<CommentController>(CommentController);
     service = module.get<CommentService>(CommentService);
+    provider = module.get<CommentProvider>(CommentProvider);
     serviceCreateSpy = jest.spyOn(service, 'create');
     serviceAddUpVoteSpy = jest.spyOn(service, 'addUpVote');
     serviceRemoveUpVoteSpy = jest.spyOn(service, 'removeUpVote');
-
+    providerAddUpVoteJobSpy = jest.spyOn(provider, 'addUpVoteJob');
+    providerRemoveUpVoteJobSpy = jest.spyOn(provider, 'removeUpVoteJob');
   });
 
   it('should be defined', () => {
@@ -69,9 +85,10 @@ describe('CommentController', () => {
 
   describe('upVote', () => {
     const serviceUpVoteError = "serviceUpVoteError";
-    it('should call upvote from commentService with right params', async () => {
+    it('should call addUpVoteJob from commentProvider with right params', async () => {
       await expect(controller.addUpVote(mockCommentId,upVoteCommentDto)).resolves.toMatchSnapshot().then(() => {
-        expect(serviceAddUpVoteSpy).toBeCalledWith(mockCommentId,upVoteCommentDto);
+        expect(providerAddUpVoteJobSpy).toBeCalledWith(mockCommentId,upVoteCommentDto);
+        expect(serviceAddUpVoteSpy).not.toBeCalled();
       })
     })
     it('should validate upVoteCommentDto', async () => { 
@@ -80,8 +97,8 @@ describe('CommentController', () => {
       const errors = await validate(plainToInstance(UpVoteCommentDto,invalidInput))
       expect(errors.length).toBe(1)
     })
-    it('should throw an error when upvote from commentService throws an error', async () => {
-      serviceAddUpVoteSpy.mockRejectedValueOnce(serviceUpVoteError);
+    it('should throw an error when upvoteJob from commentProvider throws an error', async () => {
+      providerAddUpVoteJobSpy.mockRejectedValueOnce(serviceUpVoteError);
       await expect(
         controller.addUpVote(mockCommentId, upVoteCommentDto),
       ).rejects.toBe(serviceUpVoteError);
@@ -90,9 +107,10 @@ describe('CommentController', () => {
 
   describe('removeVote', () => {
     const serviceRemoveVoteError = "serviceRemoveVoteError";
-    it('should call removeUpvote from commentService with right params', async () => {
+    it('should call removeUpvoteJob from commentProvider with right params', async () => {
       await expect(controller.removeUpVote(mockCommentId,upVoteCommentDto)).resolves.toMatchSnapshot().then(() => {
-        expect(serviceRemoveUpVoteSpy).toBeCalledWith(mockCommentId,upVoteCommentDto);
+        expect(providerRemoveUpVoteJobSpy).toBeCalledWith(mockCommentId,upVoteCommentDto);
+        expect(serviceRemoveUpVoteSpy).not.toBeCalled();
       })
     })
     it('should validate upVoteCommentDto', async () => { 
@@ -101,8 +119,8 @@ describe('CommentController', () => {
       const errors = await validate(plainToInstance(UpVoteCommentDto,invalidInput))
       expect(errors.length).toBe(1)
     })
-    it('should throw an error when removeUpvote from commentService throws an error', async () => {
-      serviceRemoveUpVoteSpy.mockRejectedValueOnce(serviceRemoveVoteError);
+    it('should throw an error when removeUpvoteJob from commentProvider throws an error', async () => {
+      providerRemoveUpVoteJobSpy.mockRejectedValueOnce(serviceRemoveVoteError);
       await expect(
         controller.removeUpVote(mockCommentId, upVoteCommentDto),
       ).rejects.toBe(serviceRemoveVoteError);

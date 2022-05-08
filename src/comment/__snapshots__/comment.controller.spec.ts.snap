@@ -14,7 +14,7 @@ CommentContract {
 }
 `;
 
-exports[`CommentController removeVote should call removeUpvote from commentService with right params 1`] = `
+exports[`CommentController removeVote should call removeUpvoteJob from commentProvider with right params 1`] = `
 CommentContract {
   "author": UserContract {
     "displayPicture": "www.example.com/img.png",
@@ -30,7 +30,7 @@ CommentContract {
 }
 `;
 
-exports[`CommentController upVote should call upvote from commentService with right params 1`] = `
+exports[`CommentController upVote should call addUpVoteJob from commentProvider with right params 1`] = `
 CommentContract {
   "author": UserContract {
     "displayPicture": "www.example.com/img.png",
@@ -42,6 +42,6 @@ CommentContract {
   "createdDate": undefined,
   "id": undefined,
   "upVoted": false,
-  "upVotes": 1,
+  "upVotes": 0,
 }
 `;

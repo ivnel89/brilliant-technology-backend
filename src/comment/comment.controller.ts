@@ -1,4 +1,6 @@
 import { Controller, Post, Body, Put, Param, } from '@nestjs/common';
+import { CommentConsumer } from './comment.consumer';
+import { CommentProvider } from './comment.provider';
 import { CommentService } from './comment.service';
 import { CommentContract } from './contract/comment.contract';
 import { CreateCommentDto } from './dto/create-comment.dto';
@@ -7,7 +9,10 @@ import { CommentContractMapper } from './mapper/comment.mapper';
 
 @Controller('comment')
 export class CommentController {
-  constructor(private readonly commentService: CommentService) {}
+  constructor(
+    private readonly commentService: CommentService,
+    private readonly commentProvider: CommentProvider
+    ) {}
   private commentContractMapper = new CommentContractMapper();
 
   @Post()
@@ -23,7 +28,8 @@ export class CommentController {
     @Param('id') id: string,
     @Body() upVoteCommentDto: UpVoteCommentDto,
   ): Promise<CommentContract> {
-    const comment = await this.commentService.addUpVote(id, upVoteCommentDto);
+    await this.commentProvider.addUpVoteJob(id, upVoteCommentDto);
+    const comment = await this.commentService.findOne(id);
     return this.commentContractMapper.build(comment, upVoteCommentDto.userId);
   }
 
@@ -32,7 +38,8 @@ export class CommentController {
     @Param('id') id: string,
     @Body() upVoteCommentDto: UpVoteCommentDto,
   ): Promise<CommentContract> {
-    const comment = await this.commentService.removeUpVote(id, upVoteCommentDto);
+   await this.commentProvider.removeUpVoteJob(id, upVoteCommentDto);
+    const comment = await this.commentService.findOne(id);
     return this.commentContractMapper.build(comment, upVoteCommentDto.userId);
   }
 }

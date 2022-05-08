@@ -7,7 +7,9 @@ export class Config{
         DATABASE_USERNAME: string,
         DATABASE_PASSWORD: string,
         DATABASE_NAME: string,
-        SERVER_PORT: string
+        SERVER_PORT: string,
+        REDIS_HOST: string,
+        REDIS_PORT: string
     }
     constructor(){
         this.config = process.env as any
