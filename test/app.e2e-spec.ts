@@ -159,7 +159,6 @@ describe('AppController (e2e)', () => {
               lastName: 'McApple',
             },
             createdDate: expect.any(String),
-            comments: [],
           },
         ]);
     });
@@ -225,21 +224,6 @@ describe('AppController (e2e)', () => {
               lastName: 'McApple',
             },
             createdDate: expect.any(String),
-            comments: [{
-              id: expect.any(String),
-              content: "Comment Lorem Ipsum",
-              createdDate: expect.any(String),
-              author: {
-                id: userId,
-                firstName: "John",
-                lastName: "McApple",
-                displayPicture: "www.example.com/img2.png"
-              },
-              replies:[],
-              upVotes: expect.any(Number),
-              upVoted: expect.any(Boolean)
-            }
-            ],
           },
         );
     });

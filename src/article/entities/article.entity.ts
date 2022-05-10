@@ -29,6 +29,6 @@ export class Article {
     @DeleteDateColumn()
     deletedDate: Date;
 
-    @OneToMany(() => Comment, comment => comment.parentArticle, {eager: true})
+    @OneToMany(() => Comment, comment => comment.parentArticle)
     comments: Array<Comment>
 }
