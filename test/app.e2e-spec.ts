@@ -185,6 +185,29 @@ describe('AppController (e2e)', () => {
         });
         commentId = response.body.id;
     })
+    it('/comment (POST) ~ reply', async () => {
+      const response = await request(app.getHttpServer())
+        .post('/comment')
+        .send({
+          content: "Reply Lorem Ipsum",
+          authorId: userId,
+          articleId,
+          parentCommentId: commentId
+        })
+        .expect(201)
+        expect(response.body).toStrictEqual({
+          id: expect.any(String),
+          content: "Reply Lorem Ipsum",
+          createdDate: expect.any(String),
+          author: {
+            id: userId,
+            firstName: "John",
+            lastName: "McApple",
+            displayPicture: "www.example.com/img2.png"
+          },
+          replies:[]
+        });
+    })
     it('/comment/:id/upvote/add (PUT)', async () => {
       const response = await request(app.getHttpServer())
         .put(`/comment/${commentId}/upvote/add`)
@@ -226,6 +249,43 @@ describe('AppController (e2e)', () => {
             createdDate: expect.any(String),
           },
         );
+    });
+    it('/comment?articleId=:id (GET)', async () => {
+      const response = await request(app.getHttpServer())
+        .get(`/comment/?articleId=${articleId}&userId=${userId}`)
+        .expect(200);
+
+        expect(response.body).toStrictEqual([
+          {
+            id: expect.any(String),
+            content: 'Comment Lorem Ipsum',
+            createdDate: expect.any(String),
+            author: {
+              id: userId,
+              firstName: 'John',
+              lastName: 'McApple',
+              displayPicture: 'www.example.com/img2.png',
+            },
+            replies: [
+              {
+                id: expect.any(String),
+                content: 'Reply Lorem Ipsum',
+                createdDate: expect.any(String),
+                author: {
+                  id: userId,
+                  firstName: 'John',
+                  lastName: 'McApple',
+                  displayPicture: 'www.example.com/img2.png',
+                },
+                replies: [],
+                upVotes: expect.any(Number),
+                upVoted: expect.any(Boolean),
+              },
+            ],
+            upVotes: expect.any(Number),
+            upVoted: expect.any(Boolean),
+          },
+        ]);
     });
     it('/comment/:id/upvote/remove (PUT)', async () => {
       const response = await request(app.getHttpServer())

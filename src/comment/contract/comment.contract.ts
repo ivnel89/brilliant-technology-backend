@@ -23,7 +23,7 @@ export class CommentContract {
               : false;
           }
           this.replies = comment.children?.map(
-            (child) => new CommentContract(child),
+            (child) => new CommentContract(child, requesterId),
           ) || [];
         }
     id: string;
