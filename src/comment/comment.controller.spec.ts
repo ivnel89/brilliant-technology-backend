@@ -52,8 +52,8 @@ describe('CommentController', () => {
     serviceCreateSpy = jest.spyOn(service, 'create');
     serviceAddUpVoteSpy = jest.spyOn(service, 'addUpVote');
     serviceRemoveUpVoteSpy = jest.spyOn(service, 'removeUpVote');
-    providerAddUpVoteJobSpy = jest.spyOn(provider, 'addUpVoteJob');
-    providerRemoveUpVoteJobSpy = jest.spyOn(provider, 'removeUpVoteJob');
+    providerAddUpVoteJobSpy = jest.spyOn(provider, 'addUpVoteJob').mockImplementation();
+    providerRemoveUpVoteJobSpy = jest.spyOn(provider, 'removeUpVoteJob').mockImplementation();
   });
 
   it('should be defined', () => {

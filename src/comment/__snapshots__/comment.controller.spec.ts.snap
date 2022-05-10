@@ -11,6 +11,7 @@ CommentContract {
   "content": "comment content",
   "createdDate": undefined,
   "id": undefined,
+  "replies": Array [],
 }
 `;
 
@@ -25,6 +26,7 @@ CommentContract {
   "content": "comment content",
   "createdDate": undefined,
   "id": undefined,
+  "replies": Array [],
   "upVoted": false,
   "upVotes": 0,
 }
@@ -41,6 +43,7 @@ CommentContract {
   "content": "comment content",
   "createdDate": undefined,
   "id": undefined,
+  "replies": Array [],
   "upVoted": false,
   "upVotes": 0,
 }
