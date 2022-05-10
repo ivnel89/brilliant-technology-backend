@@ -181,7 +181,8 @@ describe('AppController (e2e)', () => {
             firstName: "John",
             lastName: "McApple",
             displayPicture: "www.example.com/img2.png"
-          }
+          },
+          replies:[]
         });
         commentId = response.body.id;
     })
@@ -202,6 +203,7 @@ describe('AppController (e2e)', () => {
             lastName: "McApple",
             displayPicture: "www.example.com/img2.png"
           },
+          replies:[],
           upVotes: expect.any(Number),
           upVoted: expect.any(Boolean)
         });
@@ -233,6 +235,7 @@ describe('AppController (e2e)', () => {
                 lastName: "McApple",
                 displayPicture: "www.example.com/img2.png"
               },
+              replies:[],
               upVotes: expect.any(Number),
               upVoted: expect.any(Boolean)
             }
@@ -257,6 +260,7 @@ describe('AppController (e2e)', () => {
             lastName: "McApple",
             displayPicture: "www.example.com/img2.png"
           },
+          replies:[],
           upVotes: expect.any(Number),
           upVoted: expect.any(Boolean)
         });
