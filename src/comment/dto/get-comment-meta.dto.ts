@@ -1,15 +1,31 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsArray, IsString, IsUUID } from "class-validator";
+import { IsArray, IsOptional, IsString, IsUUID } from "class-validator";
 
 export class GetCommentsDto {
-  @ApiProperty()
+  @ApiProperty({
+    nullable: true,
+    required: false
+  })
   @IsString()
   @IsUUID()
-  userId: string;
+  @IsOptional()
+  userId?: string;
 
   @ApiProperty({
-     isArray: true
+     isArray: true,
+    nullable: true,
+required: false
   })
   @IsArray()
-  commentIds: Array<string>;
+  @IsOptional()
+  commentIds?: Array<string>;
+
+  @ApiProperty({
+    nullable: true,
+    required: false
+  })
+  @IsString()
+  @IsUUID()
+  @IsOptional()
+  articleId?: string;
 }

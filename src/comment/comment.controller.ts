@@ -48,9 +48,16 @@ export class CommentController {
   async getComments(
     @Query() getCommentMetaDto: GetCommentsDto,
   ): Promise<Array<CommentContract>>{
-    const comments = await this.commentService.getComments(
-      getCommentMetaDto.commentIds,
-    );
+    let comments;
+    if(getCommentMetaDto.articleId){
+      comments = await this.commentService.getCommentsByArticleId(
+        getCommentMetaDto.articleId,
+      );
+    }else{
+      comments = await this.commentService.getComments(
+        getCommentMetaDto.commentIds,
+      );
+    }
     return this.commentContractMapper.buildArray(
       comments,
       getCommentMetaDto.userId,

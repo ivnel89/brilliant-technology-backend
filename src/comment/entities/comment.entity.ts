@@ -7,11 +7,15 @@ export class Comment {
     constructor(
         author: User,
         article: Article,
-        content: string
+        content: string,
+        parentComment?: Comment
         ){  
         this.content = content;
         this.parentArticle = article;
         this.author = author;
+        if(parentComment){
+            this.parent = parentComment;
+        }
     }
     @PrimaryGeneratedColumn("uuid")
     id: string;
@@ -38,4 +42,9 @@ export class Comment {
     @JoinTable()
     upVoters: Array<User>
     //reported, nsfw
+    @ManyToOne(type => Comment, comment => comment.children)
+    parent: Comment;
+
+    @OneToMany(type => Comment, category => category.parent)
+    children: Comment[];
 }

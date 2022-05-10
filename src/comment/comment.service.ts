@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ArticleService } from 'src/article/article.service';
 import { UserService } from 'src/user/user.service';
-import { In, Repository } from 'typeorm';
+import { In, IsNull, Repository } from 'typeorm';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpVoteCommentDto } from './dto/up-vote-comment.dto';
 import { Comment } from './entities/comment.entity';
@@ -19,13 +19,15 @@ export class CommentService {
   async create(createCommentDto: CreateCommentDto) {
     const [ 
       user, 
-      article
+      article,
+      parentComment
      ] = await Promise.all([
        this.userService.findOne(createCommentDto?.authorId),
-       this.articleService.findOne(createCommentDto?.articleId)
+       this.articleService.findOne(createCommentDto?.articleId),
+       createCommentDto.parentCommentId ? this.findOne(createCommentDto?.parentCommentId) : null
       ])
     return this.commentRepository.save(
-      new Comment(user, article, createCommentDto?.content),
+      new Comment(user, article, createCommentDto?.content, parentComment),
     );
   }
 
@@ -65,7 +67,18 @@ export class CommentService {
       return this.commentRepository.find({
         where: {
           id: In(ids)
-        }
+        },
+      })
+    }
+
+  getCommentsByArticleId(
+    articleId: string): Promise<Array<Comment>>{
+      return this.commentRepository.find({
+        where: {
+          parentArticle: articleId,
+          parent: IsNull()
+        },
+        relations:['children']
       })
     }
 

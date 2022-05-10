@@ -7,7 +7,7 @@ export class CommentContract {
         comment: Comment, 
         requesterId?: string
         ){
-          const userContractMapper = new UserContractMapper()
+          const userContractMapper = new UserContractMapper();
           this.id = comment.id;
           this.content = comment.content;
           this.createdDate = comment.createdDate;
@@ -22,6 +22,9 @@ export class CommentContract {
               ? true
               : false;
           }
+          this.replies = comment.children?.map(
+            (child) => new CommentContract(child),
+          ) || [];
         }
     id: string;
     content: string;
@@ -29,4 +32,5 @@ export class CommentContract {
     createdDate: Date;
     upVotes: number;
     upVoted: boolean;
+    replies: Array<CommentContract>
 }
