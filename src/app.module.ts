@@ -39,7 +39,7 @@ const config = new Config().get();
         password: config.REDIS_PASSWORD,
         username: config.REDIS_USERNAME,
         tls:{
-          ca: fs
+          cert: fs
           .readFileSync('./src/config/redis-ca-certificate.crt')
           .toString()
         }
