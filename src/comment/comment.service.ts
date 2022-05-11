@@ -64,6 +64,9 @@ export class CommentService {
 
   getComments(
     ids: Array<string>){
+      if(!ids){
+        return []
+      }
       return this.commentRepository.find({
         where: {
           id: In(ids)

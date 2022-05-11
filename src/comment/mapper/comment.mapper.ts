@@ -6,6 +6,9 @@ export class CommentContractMapper {
     return new CommentContract(comment, requesterId);
   }
   buildArray(comments: Array<Comment>, requesterId?: string): Array<CommentContract> {
+    if(!comments){
+      return [];
+    }
     return comments.map((comment) => this.build(comment, requesterId));
   }
 }
