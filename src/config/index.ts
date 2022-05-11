@@ -9,7 +9,9 @@ export class Config{
         DATABASE_NAME: string,
         SERVER_PORT: string,
         REDIS_HOST: string,
-        REDIS_PORT: string
+        REDIS_PORT: string,
+        REDIS_USERNAME: string,
+        REDIS_PASSWORD: string
     }
     constructor(){
         this.config = process.env as any

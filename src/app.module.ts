@@ -36,6 +36,8 @@ const config = new Config().get();
       redis: {
         host: config.REDIS_HOST,
         port: Number(config.REDIS_PORT),
+        password: config.REDIS_PASSWORD,
+        username: config.REDIS_USERNAME,
       },
     }),
     CommentModule,
