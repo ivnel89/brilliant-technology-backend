@@ -28,9 +28,9 @@ const config = new Config().get();
       migrationsTableName: 'migrations',
       migrations: ['dist/migrations/*{.ts,.js}'],
       logging: ['query', 'error'],
-      // ssl: { ca: fs
-      //   .readFileSync('./src/config/db-ca-certificate.crt')
-      //   .toString()}
+      ssl: { ca: fs
+        .readFileSync('./src/config/db-ca-certificate.crt')
+        .toString()}
     }),
     BullModule.forRoot({
       redis: {
