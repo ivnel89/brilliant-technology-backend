@@ -11,12 +11,16 @@ export class Config{
         REDIS_HOST: string,
         REDIS_PORT: string,
         REDIS_USERNAME: string,
-        REDIS_PASSWORD: string
+        REDIS_PASSWORD: string,
+        ENVIRONMENT: string
     }
     constructor(){
         this.config = process.env as any
     }
     get(){
         return this.config
+    }
+    get isDevEnvironment(){
+        return this.config.ENVIRONMENT === "dev"
     }
 }

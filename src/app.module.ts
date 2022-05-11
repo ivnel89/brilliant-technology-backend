@@ -11,6 +11,7 @@ import { BullModule } from '@nestjs/bull';
 import { QueueName } from './config/queueName.enum';
 
 const config = new Config().get();
+const isDevEnvironment = new Config().isDevEnvironment;
 
 @Module({
   imports: [
@@ -28,7 +29,7 @@ const config = new Config().get();
       migrationsTableName: 'migrations',
       migrations: ['dist/migrations/*{.ts,.js}'],
       logging: ['query', 'error'],
-      ssl: { ca: fs
+      ssl: isDevEnvironment ? undefined : { ca: fs
         .readFileSync('./src/config/db-ca-certificate.crt')
         .toString()}
     }),
@@ -38,11 +39,11 @@ const config = new Config().get();
         port: Number(config.REDIS_PORT),
         password: config.REDIS_PASSWORD,
         username: config.REDIS_USERNAME,
-        tls:{
+        tls: isDevEnvironment ? undefined : {
           cert: fs
           .readFileSync('./src/config/redis-ca-certificate.crt')
           .toString()
-        }
+        } 
       },
     }),
     CommentModule,
