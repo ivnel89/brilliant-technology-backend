@@ -10,5 +10,13 @@ services:
       - "5438:5432"
     volumes:
       - comment_and_replies_dbdata:/var/lib/postgresql/data
+  redis:
+    image: redis:6.2-alpine
+    ports:
+      - 6380:6379
+    command: redis-server --save 60 1
+    volumes:
+      - redis_dbdata:/data
 volumes:
   comment_and_replies_dbdata:
+  redis_dbdata:
