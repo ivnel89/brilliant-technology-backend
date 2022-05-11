@@ -6,6 +6,7 @@ import { CommentContract } from './contract/comment.contract';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { GetCommentsDto } from './dto/get-comment-meta.dto';
 import { UpVoteCommentDto } from './dto/up-vote-comment.dto';
+import { Comment } from './entities/comment.entity';
 import { CommentContractMapper } from './mapper/comment.mapper';
 
 @Controller('comment')
@@ -48,7 +49,7 @@ export class CommentController {
   async getComments(
     @Query() getCommentMetaDto: GetCommentsDto,
   ): Promise<Array<CommentContract>>{
-    let comments;
+    let comments: Array<Comment>;
     if(getCommentMetaDto.articleId){
       comments = await this.commentService.getCommentsByArticleId(
         getCommentMetaDto.articleId,

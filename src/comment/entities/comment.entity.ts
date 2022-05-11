@@ -2,7 +2,11 @@ import { Article } from 'src/article/entities/article.entity';
 import { User } from 'src/user/entities/user.entity';
 import { Entity, Column, PrimaryGeneratedColumn, UpdateDateColumn, CreateDateColumn, DeleteDateColumn, ManyToOne, OneToMany, ManyToMany, JoinTable } from 'typeorm';
 
-@Entity()
+@Entity({
+    orderBy:{
+        createdDate: 'DESC'
+    }
+})
 export class Comment {
     constructor(
         author: User,

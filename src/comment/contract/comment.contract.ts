@@ -22,7 +22,7 @@ export class CommentContract {
               ? true
               : false;
           }
-          this.replies = comment.children?.map(
+          this.replies = comment.children?.reverse()?.map(
             (child) => new CommentContract(child, requesterId),
           ) || [];
         }
