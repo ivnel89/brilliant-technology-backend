@@ -38,6 +38,11 @@ const config = new Config().get();
         port: Number(config.REDIS_PORT),
         password: config.REDIS_PASSWORD,
         username: config.REDIS_USERNAME,
+        tls:{
+          ca: fs
+          .readFileSync('./src/config/redis-ca-certificate.crt')
+          .toString()
+        }
       },
     }),
     CommentModule,
